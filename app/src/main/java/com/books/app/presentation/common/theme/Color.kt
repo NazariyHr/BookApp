@@ -1,4 +1,4 @@
-package com.books.app.ui.theme
+package com.books.app.presentation.common.theme
 
 import androidx.compose.ui.graphics.Color
 
