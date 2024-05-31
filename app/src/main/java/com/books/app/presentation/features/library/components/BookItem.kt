@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,7 +27,9 @@ import com.books.app.domain.model.Book
 import kotlinx.coroutines.Dispatchers
 
 @Composable
-fun BookItem(book: Book) {
+fun BookItem(
+    book: Book
+) {
     val context = LocalContext.current
     Column {
         AsyncImage(
@@ -47,10 +50,13 @@ fun BookItem(book: Book) {
         Text(
             text = book.name,
             modifier = Modifier
+                .width(120.dp)
                 .padding(top = 4.dp),
             color = Color(255f, 255f, 255f, 0.7f),
             fontFamily = FontFamily(Font(R.font.nunito_sans_bold)),
-            fontSize = 16.sp
+            fontSize = 16.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }
