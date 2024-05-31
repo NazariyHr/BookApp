@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.books.app.presentation.common.theme.BookAppTheme
+import com.books.app.presentation.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ScreenContent()
+                    AppNavigation()
                 }
             }
         }
