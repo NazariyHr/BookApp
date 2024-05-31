@@ -10,11 +10,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.books.app.domain.model.Banner
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun BannersPager(
@@ -27,6 +32,16 @@ fun BannersPager(
             },
             initialPage = 1
         )
+
+        val scope = rememberCoroutineScope()
+        LaunchedEffect(pagerState.currentPage) {
+            withContext(Dispatchers.IO){
+                delay(3000)
+                scope.launch {
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                }
+            }
+        }
 
         LaunchedEffect(pagerState) {
             snapshotFlow { pagerState.currentPage }.collect { pageIndex ->
