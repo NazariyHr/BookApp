@@ -1,5 +1,6 @@
 package com.books.app.presentation.features.library
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +27,7 @@ private fun LibraryScreen(
     state: LibraryState,
     onAction: (LibraryScreenAction) -> Unit
 ) {
-
+    Text(text = "Library")
 }
 
 @Preview
