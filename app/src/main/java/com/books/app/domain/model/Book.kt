@@ -10,7 +10,7 @@ data class Book(
     val author: String,
     val summary: String,
     val genre: String,
-    val image: String,
+    val imageUrl: String,
     val views: String,
     val likes: String,
     val quotes: String

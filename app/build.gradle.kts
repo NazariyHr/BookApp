@@ -93,4 +93,7 @@ dependencies {
     implementation(platform(libs.firebase.analytics))
     implementation(platform(libs.firebase.config))
     implementation(libs.firebase.common.ktx)
+
+    // Gson
+    implementation(libs.gson)
 }
