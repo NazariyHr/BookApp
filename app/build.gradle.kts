@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -64,6 +65,7 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.androidx.compose.material)
+    implementation(libs.firebase.config.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -85,4 +87,10 @@ dependencies {
     // Compose navigation between screens
     implementation(libs.navigation.compose)
     implementation(libs.serialization.json)
+
+    // Firebase
+    implementation(platform(libs.firebase))
+    implementation(platform(libs.firebase.analytics))
+    implementation(platform(libs.firebase.config))
+    implementation(libs.firebase.common.ktx)
 }
