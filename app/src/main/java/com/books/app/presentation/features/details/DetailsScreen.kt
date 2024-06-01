@@ -136,7 +136,9 @@ private fun DetailsScreen(
                     )
                     LaunchedEffect(pagerState, state.books) {
                         snapshotFlow { pagerState.currentPage }.collect { pageIndex ->
-                            onAction(DetailsScreenAction.OnBookChanged(state.books[pageIndex].id))
+                            state.books.getOrNull(pageIndex)?.let { book ->
+                                onAction(DetailsScreenAction.OnBookChanged(book.id))
+                            }
                         }
                     }
                     val density = LocalDensity.current
@@ -167,7 +169,7 @@ private fun DetailsScreen(
                         contentPadding = PaddingValues(end = pagerPadding, start = pagerPadding),
                         pageSpacing = 16.dp
                     ) { pageIndex ->
-                        val book = state.books[pageIndex]
+                        val book = state.books.getOrNull(pageIndex) ?: return@HorizontalPager
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
