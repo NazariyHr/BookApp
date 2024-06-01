@@ -1,4 +1,4 @@
-package com.books.app.ui.theme
+package com.books.app.presentation.common.theme
 
 import android.app.Activity
 import android.os.Build
@@ -16,14 +16,14 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
+    primary = PrimaryColor,
+    secondary = SecondaryColor,
     tertiary = Pink80
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
+    primary = PrimaryColor,
+    secondary = SecondaryColor,
     tertiary = Pink40
 
     /* Other default colors to override
