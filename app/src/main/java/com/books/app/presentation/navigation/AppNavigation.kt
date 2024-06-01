@@ -3,6 +3,8 @@ package com.books.app.presentation.navigation
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -19,17 +21,28 @@ import kotlin.reflect.typeOf
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.Loading) {
-        composable<Screen.Loading> {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Loading
+    ) {
+        composable<Screen.Loading>(
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None }
+        ) {
             LoadingScreenRoot(navController)
         }
-        composable<Screen.Library> {
+        composable<Screen.Library>(
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None }
+        ) {
             LibraryScreenRoot(navController)
         }
         composable<Screen.Details>(
             typeMap = mapOf(
                 typeOf<Screen.Details>() to parcelableType<Screen.Details>()
-            )
+            ),
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None }
         ) {
             val bookId = it.toRoute<Screen.Details>().bookId
             DetailsScreenRoot(navController, bookId)
