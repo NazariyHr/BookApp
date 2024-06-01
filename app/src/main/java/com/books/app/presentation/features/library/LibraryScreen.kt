@@ -29,6 +29,7 @@ import com.books.app.R
 import com.books.app.presentation.common.theme.BookAppTheme
 import com.books.app.presentation.features.library.components.BannersPager
 import com.books.app.presentation.features.library.components.BookItem
+import com.books.app.presentation.navigation.Screen
 
 @Composable
 fun LibraryScreenRoot(
@@ -39,14 +40,16 @@ fun LibraryScreenRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LibraryScreen(
         state = state,
-        onAction = viewModel::onAction
+        onBookClicked = { bookId ->
+            navController.navigate(Screen.Details(bookId))
+        }
     )
 }
 
 @Composable
 private fun LibraryScreen(
     state: LibraryState,
-    onAction: (LibraryScreenAction) -> Unit
+    onBookClicked: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -57,32 +60,36 @@ private fun LibraryScreen(
             text = stringResource(id = R.string.library_screen_title),
             modifier = Modifier
                 .wrapContentSize()
-                .padding(start = 12.dp, end = 12.dp, top = 16.dp, bottom = 8.dp),
+                .padding(start = 16.dp, end = 16.dp, top = 18.dp, bottom = 8.dp),
             color = Color(208, 0, 110),
             fontFamily = FontFamily(Font(R.font.nunito_sans_bold)),
             fontSize = 20.sp
         )
         LazyColumn(
             modifier = Modifier
-                .padding(bottom = 12.dp)
+                .padding(bottom = 16.dp)
         ) {
             item {
-                BannersPager(state.banners)
+                BannersPager(
+                    state.banners,
+                    onBookClicked,
+                    modifier = Modifier.padding(top = 20.dp, bottom = 14.dp)
+                )
             }
 
             state.books.forEach { (genre, books) ->
                 item {
                     Spacer(
                         modifier = Modifier
-                            .height(18.dp)
-                            .padding(horizontal = 12.dp)
+                            .height(26.dp)
+                            .padding(horizontal = 16.dp)
                     )
                 }
                 item {
                     Text(
                         text = genre,
                         modifier = Modifier
-                            .padding(bottom = 8.dp, start = 12.dp),
+                            .padding(bottom = 16.dp, start = 16.dp),
                         color = Color.White,
                         fontFamily = FontFamily(Font(R.font.nunito_sans_bold)),
                         fontSize = 20.sp
@@ -90,11 +97,11 @@ private fun LibraryScreen(
                 }
                 item {
                     LazyRow(
-                        modifier = Modifier.padding(horizontal = 12.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(books) { book ->
-                            BookItem(book = book)
+                            BookItem(book = book, onBookClicked = onBookClicked)
                         }
                     }
                 }
@@ -110,7 +117,7 @@ private fun LibraryScreenPreview() {
     BookAppTheme {
         LibraryScreen(
             state = LibraryState(),
-            onAction = {}
+            onBookClicked = {}
         )
     }
 }

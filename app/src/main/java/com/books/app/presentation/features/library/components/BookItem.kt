@@ -1,5 +1,6 @@
 package com.books.app.presentation.features.library.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,10 +29,15 @@ import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun BookItem(
-    book: Book
+    book: Book,
+    onBookClicked: (BookId) -> Unit,
+    bookTitleColor: Color = Color(255f, 255f, 255f, 0.7f),
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    Column {
+    Column(
+        modifier = modifier.clickable { onBookClicked(book.id) }
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .decoderFactory(GifDecoder.Factory())
@@ -44,7 +50,7 @@ fun BookItem(
             modifier = Modifier
                 .height(150.dp)
                 .width(120.dp)
-                .clip(RoundedCornerShape(6.dp)),
+                .clip(RoundedCornerShape(16.dp)),
             contentScale = ContentScale.Crop
         )
         Text(
@@ -52,7 +58,7 @@ fun BookItem(
             modifier = Modifier
                 .width(120.dp)
                 .padding(top = 4.dp),
-            color = Color(255f, 255f, 255f, 0.7f),
+            color = bookTitleColor,
             fontFamily = FontFamily(Font(R.font.nunito_sans_bold)),
             fontSize = 16.sp,
             maxLines = 2,

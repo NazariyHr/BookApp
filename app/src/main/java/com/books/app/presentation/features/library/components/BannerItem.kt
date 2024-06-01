@@ -1,5 +1,6 @@
 package com.books.app.presentation.features.library.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,13 +19,16 @@ import coil.request.ImageRequest
 import com.books.app.domain.model.Banner
 import kotlinx.coroutines.Dispatchers
 
+typealias BookId = Int
+
 @Composable
 fun BannerItem(
     banner: Banner,
+    onBannerClicked: (BookId) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    Box(modifier = modifier) {
+    Box(modifier = modifier.clickable { onBannerClicked(banner.bookId) }) {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .decoderFactory(GifDecoder.Factory())
@@ -46,5 +50,5 @@ fun BannerItem(
 @Preview
 @Composable
 fun BannerItemPreview() {
-    BannerItem(Banner(0, 2, "https://unsplash.it/600/300"))
+    BannerItem(Banner(0, 2, "https://unsplash.it/600/300"), {})
 }

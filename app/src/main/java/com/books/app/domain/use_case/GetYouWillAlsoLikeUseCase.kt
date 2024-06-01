@@ -7,7 +7,7 @@ class GetYouWillAlsoLikeUseCase @Inject constructor(
     private val repository: FirebaseRepository
 ) {
 
-    suspend operator fun invoke(): List<Int> {
-        return repository.getYouWillAlsoLike()
+    suspend operator fun invoke(bookId: Int): List<Int> {
+        return repository.getYouWillAlsoLike(bookId)
     }
 }

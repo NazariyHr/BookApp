@@ -95,18 +95,18 @@ private fun LoadingScreenScreen(
                     fontFamily = FontFamily(Font(R.font.georgia_bolditalic)),
                     fontSize = 52.sp
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = stringResource(id = R.string.loading_screen_subtitle),
                     color = Color(0xCCFFFFFF),
                     fontFamily = FontFamily(Font(R.font.nunito_sans_bold)),
                     fontSize = 24.sp
                 )
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(45.dp))
                 LinearProgressIndicator(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 48.dp),
+                        .padding(horizontal = 50.dp),
                     color = Color.White,
                     trackColor = WhiteTransparent20,
                     strokeCap = StrokeCap.Round

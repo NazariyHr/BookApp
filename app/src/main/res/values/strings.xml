@@ -4,4 +4,13 @@
     <string name="loading_screen_title">Book App</string>
     <string name="loading_screen_subtitle">Welcome to Book App</string>
     <string name="library_screen_title">Library</string>
+
+    <string name="details_screen_readers">Readers</string>
+    <string name="details_screen_likes">Likes</string>
+    <string name="details_screen_quotes">Quotes</string>
+    <string name="details_screen_genre">Genre</string>
+
+    <string name="details_screen_summary">Summary</string>
+    <string name="details_screen_also_like">You will also like</string>
+    <string name="details_screen_read_now">Read Now</string>
 </resources>

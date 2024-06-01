@@ -23,7 +23,9 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun BannersPager(
-    banners: List<Banner>
+    banners: List<Banner>,
+    onBannerClicked: (BookId) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     if (banners.isNotEmpty()) {
         val pagerState = rememberPagerState(
@@ -35,7 +37,7 @@ fun BannersPager(
 
         val scope = rememberCoroutineScope()
         LaunchedEffect(pagerState.currentPage) {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 delay(3000)
                 scope.launch {
                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
@@ -53,7 +55,9 @@ fun BannersPager(
                 }
             }
         }
-        Box {
+        Box(
+            modifier = modifier
+        ) {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxWidth()
@@ -72,7 +76,11 @@ fun BannersPager(
                     }
 
                 }
-                BannerItem(banner, modifier = Modifier.padding(horizontal = 12.dp))
+                BannerItem(
+                    banner = banner,
+                    onBannerClicked = onBannerClicked,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
             }
             val indicatorCurrentPage by remember {
                 derivedStateOf {
@@ -84,15 +92,13 @@ fun BannersPager(
                 }
             }
 
-            if (banners.isNotEmpty()) {
-                BannersPageIndicator(
-                    banners.count(),
-                    indicatorCurrentPage,
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 10.dp)
-                )
-            }
+            BannersPageIndicator(
+                banners.count(),
+                indicatorCurrentPage,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp)
+            )
         }
     }
 }

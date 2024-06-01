@@ -44,11 +44,6 @@ class LibraryViewModel @Inject constructor(
         }
     }
 
-
-    fun onAction(action: LibraryScreenAction) {
-
-    }
-
     private fun List<Book>.splitByGenres(): Map<String, List<Book>> {
         val resultMap = mutableMapOf<String, List<Book>>()
         forEach { book ->

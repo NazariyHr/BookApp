@@ -5,6 +5,7 @@ import com.books.app.domain.model.Book
 
 interface FirebaseRepository {
     suspend fun getAllBooks(): List<Book>
+    suspend fun getBooksListForDetails(): List<Book>
     suspend fun getBanners(): List<Banner>
-    suspend fun getYouWillAlsoLike(): List<Int>
+    suspend fun getYouWillAlsoLike(bookId: Int): List<Int>
 }

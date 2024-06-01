@@ -2,7 +2,7 @@ package com.books.app.data.firebase.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class RemoteConfigResponse(
+data class MainConfigResponse(
     val books: List<BookDto>,
     @SerializedName("top_banner_slides")
     val topBannerSlides: List<TopBannerSlide>,
