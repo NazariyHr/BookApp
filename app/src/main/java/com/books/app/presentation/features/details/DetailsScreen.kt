@@ -30,10 +30,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -50,7 +49,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
@@ -142,31 +142,22 @@ private fun DetailsScreen(
                         }
                     }
                     val density = LocalDensity.current
-                    var pagerSize by remember { mutableStateOf(IntSize.Zero) }
-                    val pagerPadding by remember {
-                        derivedStateOf {
-                            with(density) {
-                                if (pagerSize.width == 0) {
-                                    0.toDp()
-                                } else {
-                                    val onePageSize = with(this) { 200.dp.toPx() }
-                                    val extraSpace = pagerSize.width - onePageSize
-                                    val extraSpaceForOneEnd = extraSpace / 2
-                                    extraSpaceForOneEnd.toDp()
-                                }
-                            }
-                        }
-                    }
+                    var pagerSizeWidth by rememberSaveable { mutableIntStateOf(0) }
 
                     HorizontalPager(
                         state = pagerState,
                         modifier = Modifier
                             .fillMaxWidth()
                             .onSizeChanged {
-                                pagerSize = it
+                                pagerSizeWidth = it.width
                             },
                         pageSize = PageSize.Fixed(200.dp),
-                        contentPadding = PaddingValues(end = pagerPadding, start = pagerPadding),
+                        contentPadding = PaddingValues(
+                            end = calculatePaddingForTopPager(
+                                density,
+                                pagerSizeWidth
+                            ), start = calculatePaddingForTopPager(density, pagerSizeWidth)
+                        ),
                         pageSpacing = 16.dp
                     ) { pageIndex ->
                         val book = state.books.getOrNull(pageIndex) ?: return@HorizontalPager
@@ -358,6 +349,19 @@ private fun DetailsScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+fun calculatePaddingForTopPager(density: Density, pagerSizeWidth: Int): Dp {
+    return with(density) {
+        if (pagerSizeWidth == 0) {
+            0.toDp()
+        } else {
+            val onePageSize = with(this) { 200.dp.toPx() }
+            val extraSpace = pagerSizeWidth - onePageSize
+            val extraSpaceForOneEnd = extraSpace / 2
+            extraSpaceForOneEnd.toDp()
         }
     }
 }

@@ -7,7 +7,6 @@ import com.books.app.domain.use_case.GetBooksByIdsUseCase
 import com.books.app.domain.use_case.GetBooksInDetailsUseCase
 import com.books.app.domain.use_case.GetYouWillAlsoLikeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,24 +32,17 @@ class DetailsViewModel @Inject constructor(
 
     val state = savedStateHandle.getStateFlow(STATE_KEY, DetailsState())
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val books = getBooksInDetailsUseCase()
-            stateValue = stateValue.copy(
-                books = books
-            )
-        }
-    }
-
     fun saveBookId(bookId: Int) {
-        viewModelScope.launch {
-            val books = getBooksInDetailsUseCase()
-            stateValue = stateValue.copy(
-                bookIdWhileInit = bookId,
-                books = books,
-                selectedBook = books.find { it.id == bookId },
-                booksWillAlsoLike = getBooksByIdsUseCase(getYouWillAlsoLikeUseCase(bookId))
-            )
+        if (stateValue.bookIdWhileInit == -1) {
+            viewModelScope.launch {
+                val books = getBooksInDetailsUseCase()
+                stateValue = stateValue.copy(
+                    bookIdWhileInit = bookId,
+                    books = books,
+                    selectedBook = books.find { it.id == bookId },
+                    booksWillAlsoLike = getBooksByIdsUseCase(getYouWillAlsoLikeUseCase(bookId))
+                )
+            }
         }
     }
 

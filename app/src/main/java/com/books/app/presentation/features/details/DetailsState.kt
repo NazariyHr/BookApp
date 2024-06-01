@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DetailsState(
-    val bookIdWhileInit: Int = 0,
+    val bookIdWhileInit: Int = -1,
     val selectedBook: Book? = null,
     val books: List<Book> = emptyList(),
     val booksWillAlsoLike: List<Book> = emptyList()
