@@ -129,10 +129,10 @@ private fun DetailsScreen(
             item {
                 if (state.books.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(4.dp))
-
+                    val initPage = state.books.indexOfFirst { it.id == state.bookIdWhileInit }
                     val pagerState = rememberPagerState(
                         pageCount = { state.books.count() },
-                        initialPage = state.books.indexOfFirst { it.id == state.bookIdWhileInit }
+                        initialPage = if (initPage != -1) initPage else 0
                     )
                     LaunchedEffect(pagerState, state.books) {
                         snapshotFlow { pagerState.currentPage }.collect { pageIndex ->
